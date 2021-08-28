@@ -34,14 +34,34 @@ function updateSize() {
   colorSelectedPads();
 }
 
+
+function randColor(){
+	return  Math.floor(Math.random() * 16777215).toString(16);
+}
+function colorMeRandom(ev) {
+	const someColor = randColor();
+  ev.target.style.backgroundColor= 	'#' +someColor;
+}
 function colorMePure(ev) {
   const someColor = randColor();
-  ev.target.classList.add("colored");  
+  ev.target.classList.add("colored");
+  
 }
 function colorSelectedPads() {
   pads.forEach(function (element) {
     element.addEventListener("mouseover", colorMePure);
   });
+}
+function colorSelectedPadsRand() {
+  pads.forEach(function (element) {
+    element.addEventListener("mouseover", colorMeRandom);
+  });
+}
+function allowRandomColors() {
+  resetGrid();
+  createGrid(currentSize);
+  pads = grid.childNodes;
+  colorSelectedPadsRand();
 }
 
 function resetPadColors() {
@@ -51,9 +71,11 @@ function resetPadColors() {
 	colorSelectedPads();
 }
 
+
 createGrid(DefaultSize);
 
-
+// Size  change
+sizeButton.addEventListener("click", updateSize);
 
 // Set up event listener for hover effect
 colorSelectedPads();
@@ -61,4 +83,6 @@ colorSelectedPads();
 // Reset functionality
 resetButton.addEventListener("click", resetPadColors);
 
-
+// Random colors
+colorButton.addEventListener("click",allowRandomColors);
+ 
